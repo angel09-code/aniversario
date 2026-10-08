@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz 3er Aniversario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- LIBRERÍA DE CONFETI RECUPERADA -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+    <!-- MENÚ SUPERIOR -->
+    <header class="netflix-header">
+        <h1 class="netflix-logo">NETFLIX</h1>
+        <nav class="netflix-nav">
+            <a href="#" class="activo">Inicio</a>
+            <a href="#">Series</a>
+            <a href="#">Películas</a>
+            <a href="#">Mi Lista</a>
+        </nav>
+    </header>
+
+    <!-- PORTADA PRINCIPAL (HERO) -->
+    <div class="hero-section" style="background-image: url('foto_principal.jpg');">
+        <div class="hero-vignette"></div>
+        <div class="hero-contenido">
+            <div class="hero-n-series">
+                <span class="n-roja">N</span> <span class="series-texto">S E R I E S</span>
+            </div>
+            <h2 class="hero-titulo">Por una vida a tu Lado</h2>
+            <div class="hero-metadata">
+                <span>Romance</span> • <span>Estreno en 2023</span> • <span>3 Años</span>
+            </div>
+            <p class="hero-descripcion">
+                Dos extraños se conocen por el camino hacia una cafeteria escolar, la chica le habla el mira sus ojos y queda loco por ella, no hay una noche que no piense en ella...
+            </p>
+            <div class="hero-botones">
+                <button id="btn-reproducir" class="btn-play"><span>▶</span> Reproducir</button>
+                <button id="btn-mas-info" class="btn-info"><span>ⓘ</span> Más info</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FILA DE RECUERDOS (CARRUSEL VERTICAL) -->
+    <div class="carrusel-contenedor">
+        <h3 class="titulo-carrusel">Nuestros Episodios</h3>
+        <div class="carrusel-fila">
+            <div class="miniatura" onclick="abrirJuego(1)"><img src="foto1.jpg" alt="1"></div>
+            <div class="miniatura" onclick="abrirJuego(2)"><img src="foto2.jpg" alt="2"></div>
+            <div class="miniatura" onclick="abrirJuego(3)"><img src="foto3.jpg" alt="3"></div>
+            <div class="miniatura" onclick="abrirJuego(4)"><img src="foto4.jpg" alt="4"></div>
+            <div class="miniatura" onclick="abrirJuego(5)"><img src="foto5.jpg" alt="5"></div>
+            <div class="miniatura" onclick="abrirJuego(6)"><img src="foto6.jpg" alt="6"></div>
+            <div class="miniatura" onclick="abrirJuego(7)"><img src="foto7.jpg" alt="7"></div>
+            <div class="miniatura" onclick="abrirJuego(8)"><img src="foto8.jpg" alt="8"></div>
+        </div>
+    </div>
+
+    <!-- VENTANA EMERGENTE DE "MÁS INFO" -->
+    <div id="modal-info" class="oculto">
+        <div class="contenido-modal-info">
+            <button id="btn-cerrar-info" class="boton-cerrar-esquina">X</button>
+            <h2 class="titulo-info">Por una vida a tu Lado</h2>
+            
+            <div class="info-detalles">
+                <p><span class="etiqueta-info">Elenco:</span> - Mis ojitos lindos - Angel</p>
+                <p><span class="etiqueta-info">Creadores:</span> Diosito (y un poco de suerte)</p>
+            </div>
+            
+            <div class="info-historia">
+                <h3 class="etiqueta-info">Nuestra Historia:</h3>
+                <p>Caminabamos en la escuela y nos topamos aunque me reclamaste por otra cosa a mi solo me importo tus ojitos aunque ya no los veo tanto, me enamoraron muchisimo tanto que no deje de pensar en ti por meses y decidi regalarte tu collar y tus aretes. Porque sabia que algun dia te fijarias en mi jejejejeje, pero cuando nos enojamos la ultima vez que me dijiste que no, me enoje pero me puso mas tite el saber que no querias nada conmigo. Pero ño sabia que ya habias caido muejejejeje </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CENTRO DE JUEGOS (Modal Universal) -->
+    <div id="modal-juegos" class="oculto">
+        <div class="contenido-modal">
+            <button onclick="cerrarJuego()" class="boton-cerrar-esquina">X</button>
+            
+            <!-- JUEGO 1: TRIVIA -->
+            <div id="juego1" class="juego-pantalla oculto">
+                <h3 id="j1-pregunta" class="texto-pregunta">¿Pregunta?</h3>
+                <div id="j1-opciones" class="opciones-trivia"></div>
+                <p id="j1-progreso" class="texto-progreso">Pregunta 1 de 5</p>
+            </div>
+
+            <!-- JUEGO 2: SOMBRAS -->
+            <div id="juego2" class="juego-pantalla oculto">
+                <h3 class="texto-pregunta">¿Qué princesa es?</h3>
+                <div class="contenedor-sombra">
+                    <img id="j2-imagen" src="" alt="Sombra">
+                </div>
+                <div id="j2-opciones" class="opciones-trivia"></div>
+                <p id="j2-progreso" class="texto-progreso">Personaje 1 de 4</p>
+            </div>
+
+            <!-- JUEGO 3: ORDENA LA FRASE -->
+            <div id="juego3" class="juego-pantalla oculto">
+                <h3 class="texto-pregunta">Ordena nuestro mensaje</h3>
+                <div id="j3-linea-respuesta" class="linea-respuesta"></div>
+                <div id="j3-banco-palabras" class="banco-palabras"></div>
+                <button id="j3-btn-revisar" class="btn-revisar-pro oculto" onclick="revisarFrase()">Revisar</button>
+                <p id="j3-progreso" class="texto-progreso">Frase 1 de 5</p>
+            </div>
+
+            <!-- JUEGO 4: COMPLETAR LA FRASE -->
+            <div id="juego4" class="juego-pantalla oculto">
+                <h3 class="texto-pregunta">Completa la historia</h3>
+                <div class="frase-incompleta">
+                    <span id="j4-inicio">Nos conocimos en la escuela </span>
+                    <span class="espacio-blanco">______</span>
+                    <span id="j4-fin"> a finales de año.</span>
+                </div>
+                <div id="j4-opciones" class="opciones-trivia"></div>
+                <p id="j4-progreso" class="texto-progreso">Frase 1 de 5</p>
+            </div>
+
+            <!-- JUEGO 5: ADIVINA LA IMAGEN -->
+            <div id="juego5" class="juego-pantalla oculto">
+                <h3 class="texto-pregunta">¿Dónde estábamos?</h3>
+                <div class="contenedor-foto-juego">
+                    <img id="j5-imagen" src="" alt="Recuerdo">
+                </div>
+                <div id="j5-opciones" class="opciones-trivia"></div>
+                <p id="j5-progreso" class="texto-progreso">Foto 1 de 5</p>
+            </div>
+
+            <!-- JUEGO 6: ¿QUIÉN ES MÁS PROBABLE? -->
+            <div id="juego6" class="juego-pantalla oculto">
+                <h3 class="texto-pregunta" id="j6-pregunta">¿Quién es más probable que...?</h3>
+                <div id="j6-opciones" class="opciones-trivia"></div>
+                <p id="j6-progreso" class="texto-progreso">Ronda 1 de 5</p>
+            </div>
+
+            <!-- JUEGO 7: VERDADERO O FALSO -->
+            <div id="juego7" class="juego-pantalla oculto">
+                <h3 class="texto-pregunta" id="j7-afirmacion">Afirmación</h3>
+                <div class="opciones-vf">
+                    <button class="boton-opcion" onclick="verificarJ7(true, this)">Verdadero</button>
+                    <button class="boton-opcion" onclick="verificarJ7(false, this)">Falso</button>
+                </div>
+                <p id="j7-progreso" class="texto-progreso">Nivel 1 de 5</p>
+            </div>
+
+            <!-- JUEGO 8: EL CANDADO PIN -->
+            <div id="juego8" class="juego-pantalla oculto">
+                <h3 class="texto-pregunta">Ingresa la fecha de nuestro aniversario (Día/Mes)</h3>
+                <div class="pin-display" id="j8-display">_ _ _ _</div>
+                <div class="teclado-numerico">
+                    <button onclick="teclearPin(1)">1</button>
+                    <button onclick="teclearPin(2)">2</button>
+                    <button onclick="teclearPin(3)">3</button>
+                    <button onclick="teclearPin(4)">4</button>
+                    <button onclick="teclearPin(5)">5</button>
+                    <button onclick="teclearPin(6)">6</button>
+                    <button onclick="teclearPin(7)">7</button>
+                    <button onclick="teclearPin(8)">8</button>
+                    <button onclick="teclearPin(9)">9</button>
+                    <button class="btn-borrar" onclick="borrarPin()">C</button>
+                    <button onclick="teclearPin(0)">0</button>
+                    <button class="btn-ok" onclick="verificarPin()">OK</button>
+                </div>
+            </div>
+
+            <!-- PANTALLA DE ÉXITO GENERAL -->
+            <div id="pantalla-exito-juego" class="oculto">
+                <h2 class="titulo-seccion" style="color: #000; font-family: 'Helvetica Neue', sans-serif;">¡NIVEL COMPLETADO!</h2>
+                <p id="texto-recompensa" class="texto-romantico">Mensaje especial desbloqueado.</p>
+                <button onclick="cerrarJuego()" class="btn-revisar-pro">Volver al menú</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- AQUÍ SE ENLAZA TU ARCHIVO JS -->
+    <script src="script.js"></script>
+</body>
+</html>
